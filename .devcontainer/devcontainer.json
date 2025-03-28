@@ -1,0 +1,26 @@
+{
+    "name": "zed_open_capture_dev",
+    "dockerFile": "../Dockerfile",
+    "context": "..",
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "terminal.integrated.shell.linux": "/bin/bash"
+        },
+        "extensions": [
+          "ms-vscode-remote.remote-containers",
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    },
+    "mounts": [
+      "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+      "source=/home/cvg/Documents/zed_open_capture_ros/catkin_ws,target=/catkin_ws_local,type=bind",
+      "source=/dev,target=/dev,type=bind"
+    ],
+    "runArgs": [
+      "--privileged"  // Required for accessing /dev properly
+    ],
+    "remoteUser": "root",
+    "workspaceFolder": "/catkin_ws"
+  }
