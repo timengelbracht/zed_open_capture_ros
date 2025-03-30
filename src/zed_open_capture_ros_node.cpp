@@ -8,7 +8,7 @@
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/Imu.h>
 #include <dynamic_reconfigure/server.h>
-#include <zed_open_capture_ros_wrapper/ZedOpenCaptureConfig.h>
+#include <zed_open_capture_ros/ZedOpenCaptureConfig.h>
 
 #define VIDEO_MOD_AVAILABLE 1
 #define SENSORS_MOD_AVAILABLE 1
@@ -23,7 +23,7 @@ sl_oc::video::VideoParams video_params;
 std::atomic<bool> running(true);
 
 // Dynamic reconfigure callback
-void reconfigCallback(zed_open_capture_ros_wrapper::ZedOpenCaptureConfig &config, uint32_t level) {
+void reconfigCallback(zed_open_capture_ros::ZedOpenCaptureConfig &config, uint32_t level) {
     video_params.res = static_cast<sl_oc::video::RESOLUTION>(config.resolution);
     video_params.fps = static_cast<sl_oc::video::FPS>(config.fps);
     video_params.verbose = config.verbose;
@@ -52,7 +52,7 @@ void imuPublisher(ros::Publisher &imu_pub) {
 }
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "zed_open_capture_ros_wrapper_node");
+    ros::init(argc, argv, "zed_open_capture_ros_node");
     ros::NodeHandle nh;
 
     ros::Publisher left_pub = nh.advertise<sensor_msgs::Image>("/zed/left/image_raw", 1);
@@ -66,8 +66,8 @@ int main(int argc, char **argv) {
 
     std::thread imu_thread(imuPublisher, std::ref(imu_pub));
 
-    dynamic_reconfigure::Server<zed_open_capture_ros_wrapper::ZedOpenCaptureConfig> server;
-    dynamic_reconfigure::Server<zed_open_capture_ros_wrapper::ZedOpenCaptureConfig>::CallbackType f;
+    dynamic_reconfigure::Server<zed_open_capture_ros::ZedOpenCaptureConfig> server;
+    dynamic_reconfigure::Server<zed_open_capture_ros::ZedOpenCaptureConfig>::CallbackType f;
     f = boost::bind(&reconfigCallback, _1, _2);
     server.setCallback(f);
 

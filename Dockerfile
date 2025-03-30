@@ -21,10 +21,13 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
 	libusb-1.0-0-dev \ 
 	libhidapi-libusb0 \ 
-	libhidapi-dev 
+	libhidapi-dev \
+	python3-catkin-tools
 	
 # Install Python dependencies
-RUN apt-get update && apt-get install -y python3-pip
+RUN apt-get update && apt-get install -y \ 
+	python3-pip 
+	
 RUN pip3 install numpy opencv-python
 
 # Create catkin workspace
@@ -42,7 +45,12 @@ WORKDIR /catkin_ws
 
 #install ros wrapper
 RUN git clone https://github.com/timengelbracht/zed_open_capture_ros.git src/zed_open_capture_ros
-RUN catkin build
+RUN mkdir -p src/zed_open_capture_ros/include
+
+
+WORKDIR /catkin_ws
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && \
+    cd /catkin_ws && catkin config --extend /opt/ros/noetic && catkin build"
 
 
 # Source ROS environment

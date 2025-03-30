@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <node name="zed_open_capture_ros_wrapper_node" pkg="zed_open_capture_ros_wrapper" type="zed_open_capture_ros_wrapper_node" output="screen">
+  <node name="zed_open_capture_ros_node" pkg="zed_open_capture_ros" type="zed_open_capture_ros_node" output="screen">
     <param name="resolution" value="2" />
     <param name="fps" value="60" />
     <param name="verbose" value="true" />
