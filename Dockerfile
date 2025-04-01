@@ -45,7 +45,6 @@ WORKDIR /catkin_ws
 
 #install ros wrapper
 RUN git clone https://github.com/timengelbracht/zed_open_capture_ros.git src/zed_open_capture_ros
-RUN mkdir -p src/zed_open_capture_ros/include
 
 
 WORKDIR /catkin_ws
