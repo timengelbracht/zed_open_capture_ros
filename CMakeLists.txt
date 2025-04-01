@@ -19,7 +19,6 @@ generate_dynamic_reconfigure_options(
 
 ## catkin specific configuration
 catkin_package(
-  INCLUDE_DIRS include
   LIBRARIES zed_open_capture_ros
   CATKIN_DEPENDS cv_bridge dynamic_reconfigure roscpp sensor_msgs
 )
