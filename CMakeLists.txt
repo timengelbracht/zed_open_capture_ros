@@ -10,6 +10,10 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   roscpp
   sensor_msgs
+  camera_info_manager
+  diagnostic_updater
+  tf2_ros
+  geometry_msgs
 )
 
 ## Generate dynamic reconfigure options
@@ -20,17 +24,27 @@ generate_dynamic_reconfigure_options(
 ## catkin specific configuration
 catkin_package(
   LIBRARIES zed_open_capture_ros
-  CATKIN_DEPENDS cv_bridge dynamic_reconfigure roscpp sensor_msgs
+  CATKIN_DEPENDS
+    cv_bridge
+    dynamic_reconfigure
+    roscpp
+    sensor_msgs
+    camera_info_manager
+    diagnostic_updater
+    tf2_ros
+    geometry_msgs
 )
 
 ## Specify additional locations of header files
-include_directories(include
+include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
   /usr/local/include
   /catkin_ws/devel/include
   /usr/include/hidapi
 )
 
+## Print helpful info
 message(STATUS "CMake Binary Dir: ${CMAKE_BINARY_DIR}")
 message(STATUS "CMake Source Dir: ${PROJECT_SOURCE_DIR}")
 message(STATUS "Catkin Include Dirs: ${catkin_INCLUDE_DIRS}")
@@ -38,7 +52,9 @@ message(STATUS "Catkin Include Dirs: ${catkin_INCLUDE_DIRS}")
 ## Declare a C++ executable
 add_executable(${PROJECT_NAME}_node src/zed_open_capture_ros_node.cpp)
 
-add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_gencfg)
+add_dependencies(${PROJECT_NAME}_node
+  ${PROJECT_NAME}_gencfg
+)
 
 ## Link the executable with necessary libraries
 target_link_libraries(${PROJECT_NAME}_node
