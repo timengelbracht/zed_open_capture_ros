@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- Arguments -->
+  <arg name="resolution" default="2" />
+  <arg name="fps" default="20" />
+  <arg name="verbose" default="true" />
+
+  <!-- Node -->
   <node name="zed_open_capture_ros_node" pkg="zed_open_capture_ros" type="zed_open_capture_ros_node" output="screen">
-    <param name="resolution" value="2" />
-    <param name="fps" value="60" />
-    <param name="verbose" value="true" />
+    <param name="resolution" value="$(arg resolution)" />
+    <param name="fps" value="$(arg fps)" />
+    <param name="verbose" value="$(arg verbose)" />
   </node>
 </launch>
